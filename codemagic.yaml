@@ -5,10 +5,11 @@ workflows:
     environment:
       vars:
         PACKAGE_NAME: "com.shoulderelbow.app"
-      node: 18
+      node: 20
     scripts:
       - npm install
       - npm install @capacitor/cli
+      - npm install @capacitor/android
       - npx cap sync android
       - cd android
       - ./gradlew assembleRelease
