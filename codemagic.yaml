@@ -1,0 +1,18 @@
+workflows:
+  android-build:
+    name: Build Android APK and AAB
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        PACKAGE_NAME: "com.shoulderelbow.app"
+      node: 18
+    scripts:
+      - npm install
+      - npm run build
+      - npx cap sync android
+      - cd android
+      - ./gradlew assembleRelease
+      - ./gradlew bundleRelease
+    artifacts:
+      - android/app/build/outputs/**/*.apk
+      - android/app/build/outputs/**/*.aab
