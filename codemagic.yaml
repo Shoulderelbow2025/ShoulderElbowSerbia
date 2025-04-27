@@ -1,19 +1,21 @@
 workflows:
-  android-build:
-    name: Build Android APK and AAB
-    instance_type: mac_mini_m1
+  build_android:
+    name: Build Android APK
+    instance_type: mac_mini_m2
+    max_build_duration: 60
     environment:
       vars:
-        PACKAGE_NAME: "com.shoulderelbow.app"
-      node: 20
+        PACKAGE_NAME: "com.shoulderelbow.serbia" 
     scripts:
       - npm install
-      - npm install @capacitor/cli
-      - npm install @capacitor/android
+      - npm install @capacitor/cli @capacitor/android
       - npx cap sync android
       - cd android
       - ./gradlew assembleRelease
-      - ./gradlew bundleRelease
     artifacts:
       - android/app/build/outputs/**/*.apk
       - android/app/build/outputs/**/*.aab
+    publishing:
+      email:
+        recipients:
+          - filip.cucakovic@gmail.com
